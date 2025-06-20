@@ -1,0 +1,4 @@
+crewai[tools]>=0.130.0
+python-dotenv
+requests
+PyPDF2
