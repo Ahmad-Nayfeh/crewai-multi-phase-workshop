@@ -1,0 +1,5 @@
+[
+  {"name": "Alice", "role": "Engineer", "location": "Berlin"},
+  {"name": "Bob", "role": "Designer", "location": "London"},
+  {"name": "Charlie", "role": "Manager", "location": "New York"}
+]

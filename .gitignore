@@ -5,10 +5,15 @@ __pycache__/
 # Virtual environment
 venv/
 
-
 # Environment variables
 .env
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# output files
+outputs/*
+!outputs/sample_phase6.pdf
+!outputs/sample_phase6.json
+!outputs/sample_phase6.csv
