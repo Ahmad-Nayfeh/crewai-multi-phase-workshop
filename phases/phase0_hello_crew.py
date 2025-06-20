@@ -1,4 +1,13 @@
-# phase0_hello_crew.py
+"""
+PHASE 0: Hello CrewAI
+
+Goal:
+- Run your first two-agent CrewAI pipeline.
+- Learn: basic agent/task structure, context passing, and console output.
+
+Skills:
+- CrewAI installation, API keys, agent definition, task chaining, process running.
+"""
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -6,54 +15,50 @@ load_dotenv()
 from crewai import Agent, Task, Crew, Process
 from crewai_tools import SerperDevTool
 
-# ----- 1. Define the AGENTS -----
-
+# --- AGENTS ---
 researcher = Agent(
-    role="Web Research Specialist",
-    goal="Find relevant and up-to-date information about a given topic",
-    backstory="You are skilled at using search engines and filtering high-quality sources.",
+    role="Researcher",
+    goal="Find key facts about CrewAI",
+    backstory="An expert at online research and fact-finding.",
     tools=[SerperDevTool()],
     verbose=True
 )
 
-summary_writer = Agent(
+writer = Agent(
     role="Summary Writer",
-    goal="Write concise and informative summaries of research findings",
-    backstory="You are an expert at distilling complex info into readable summaries for beginners.",
+    goal="Write a concise summary from research findings.",
+    backstory="Skilled at making complex info easy for beginners.",
     verbose=True
 )
 
-# ----- 2. Define the TASKS -----
-
-topic = "CrewAI framework use cases"
+# --- TASKS ---
+topic = "CrewAI basics and use cases"
 
 research_task = Task(
-    description=f"Research the topic: '{topic}'. List the 5 most important/useful things a developer should know. Use your web search tool.",
-    expected_output="A bullet-point list of the 5 most important/useful facts for developers about CrewAI use cases.",
+    description=f"Research: '{topic}'. List 3 key facts or use cases.",
+    expected_output="A bullet list of 3 key facts about CrewAI.",
     agent=researcher,
     tools=[SerperDevTool()]
 )
 
 summary_task = Task(
-    description="Take the research findings and write a short, easy-to-understand summary (max 150 words).",
-    expected_output="A concise summary for beginners, covering the main findings from the research task.",
-    agent=summary_writer,
+    description="Summarize the research findings in plain English, max 100 words.",
+    expected_output="A readable, 2-3 sentence summary for beginners.",
+    agent=writer,
     context=[research_task]
 )
 
-# ----- 3. Create the CREW -----
-
+# --- CREW ---
 crew = Crew(
-    agents=[researcher, summary_writer],
+    agents=[researcher, writer],
     tasks=[research_task, summary_task],
-    process=Process.sequential,  # Task order matters!
+    process=Process.sequential,
     verbose=True
 )
 
-# ----- 4. Run the Crew and Print the Summary -----
-
+# --- RUN ---
 if __name__ == "__main__":
     result = crew.kickoff()
-    print("\n\n========== FINAL SUMMARY ==========\n")
+    print("\n====== FINAL SUMMARY ======")
     print(result)
-    print("\n===================================")
+    print("===========================")
